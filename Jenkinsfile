@@ -2,6 +2,7 @@ pipeline {
   agent any
   environment {
     docker_username='stifstof'
+    test_server='35.195.24.192'
   }
   stages {
 
@@ -14,7 +15,7 @@ pipeline {
       }  
     }
 
-    stage('Build Docker') {
+    stage('build docker') {
       options {
         skipDefaultCheckout()
       }
@@ -45,12 +46,12 @@ pipeline {
           sh 'python -m pip install -r requirements.txt'
           sh 'python tests.py'
           
-          sh 'Docker_scripts/run.sh $docker_username tests.py'
-          echo 'Docker exit code: $?'
+          def testResults = sh 'Docker_scripts/run.sh $docker_username tests.py'
+          echo 'Docker exit code: $testResults'
         }
     }
 
-    stage('Deploy') {
+    stage('Push to Dockerhub') {
       options {
         skipDefaultCheckout()
       }
@@ -67,6 +68,17 @@ pipeline {
         //sh 'ci/push-docker.sh'
       }
 
+    }
+
+    stage('Deploy to test server'){
+      options {
+        skipDefaultCheckout()
+      }
+      when { branch "jenkins" }
+      steps {
+        // DEPLOY TO TEST-SERVER
+        sh 'Docker_scripts/deploy.sh $test_server $docker_username'
+      }
     }
 
   }
