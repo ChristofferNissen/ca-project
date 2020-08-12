@@ -41,10 +41,11 @@ pipeline {
           unstash 'code'
           sh 'ls -lah'
           sh 'sudo apt-get install python-pip -y'
+          sh 'sudo pip install requests'
           sh 'python -m pip install -r requirements.txt'
           sh 'python tests.py'
           
-          sh 'Docker_scripts/run.sh tests.py $docker_username'
+          sh 'Docker_scripts/run.sh $docker_username tests.py'
           echo 'Docker exit code: $?'
         }
     }
