@@ -1,0 +1,1 @@
+docker push $1/caprojectapp
