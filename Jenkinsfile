@@ -46,8 +46,9 @@ pipeline {
           sh 'python -m pip install -r requirements.txt'
           sh 'python tests.py'
           
-          testResults = sh 'Docker_scripts/run.sh $docker_username tests.py'
-          echo 'Docker exit code: $testResults'
+          echo 'Pipeline will fail if docker tests returns non-zero exit status'
+          sh 'Docker_scripts/run.sh $docker_username tests.py'
+          //echo 'Docker exit code: $testResults'
         }
     }
 
