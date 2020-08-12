@@ -46,7 +46,7 @@ pipeline {
           sh 'python -m pip install -r requirements.txt'
           sh 'python tests.py'
           
-          def testResults = sh 'Docker_scripts/run.sh $docker_username tests.py'
+          testResults = sh 'Docker_scripts/run.sh $docker_username tests.py'
           echo 'Docker exit code: $testResults'
         }
     }
@@ -78,6 +78,17 @@ pipeline {
       steps {
         // DEPLOY TO TEST-SERVER
         sh 'Docker_scripts/deploy.sh $test_server $docker_username'
+      }
+    }
+
+    stage('Integration test') {
+      options {
+        skipDefaultCheckout()
+      }
+      when { branch "jenkins" }
+      steps {
+        // CURL test server
+        sh 'curl '
       }
     }
 
