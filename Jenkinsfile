@@ -90,7 +90,7 @@ pipeline {
       when { branch "jenkins" }
       steps {
         // CURL test server
-        sh 'curl $test_server'
+        sh 'curl -s -o /dev/null -w "%{http_code}" $test_server'
       }
     }
 
