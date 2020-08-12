@@ -10,7 +10,7 @@ pipeline {
         label 'host'
       }
       steps {
-        stash name: "code", excludes: ".git"
+        stash name: 'code', excludes: '.git'
       }  
     }
 
@@ -19,7 +19,7 @@ pipeline {
         skipDefaultCheckout()
       }
       steps {
-        unstash "code"
+        unstash 'code'
         sh 'Docker_scripts/build.sh $docker_username'
       }
       post {
