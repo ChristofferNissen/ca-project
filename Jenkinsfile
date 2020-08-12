@@ -20,6 +20,7 @@ pipeline {
       }
       steps {
         unstash 'code'
+        sh 'pwd'
         sh 'Docker_scripts/build.sh $docker_username'
       }
       post {
