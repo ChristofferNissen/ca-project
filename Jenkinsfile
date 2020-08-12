@@ -61,7 +61,7 @@ pipeline {
         //sh 'ci/build-docker.sh'
         //sh 'Docker_scripts/build.sh' $docker_username
         sh 'echo "$DOCKERCREDS_PSW" | docker login -u "$DOCKERCREDS_USR" --password-stdin' //login to docker hub with the credentials above
-        sh 'Docker_scripts/push.sh' $docker_username
+        sh 'Docker_scripts/push.sh $docker_username'
         //sh 'ci/push-docker.sh'
       }
 
