@@ -40,7 +40,7 @@ pipeline {
           sh 'ls -lah'
           unstash 'code'
           sh 'ls -lah'
-          sh 'apt-get install python-pip -y'
+          sh 'sudo apt-get install python-pip -y'
           sh 'python -m pip install -r requirements.txt'
           sh 'python tests.py'
           
