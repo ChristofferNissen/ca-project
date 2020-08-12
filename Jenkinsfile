@@ -10,7 +10,7 @@ pipeline {
         label 'host'
       }
       steps {
-        stash name: 'code', excludes: '.git'
+        stash name: "code", excludes: ".git"
       }  
     }
 
