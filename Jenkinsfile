@@ -2,7 +2,7 @@ pipeline {
   agent any
   environment {
     docker_username='stifstof'
-    ?=0
+    '?'='0'
   }
   stages {
 
