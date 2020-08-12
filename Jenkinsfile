@@ -71,17 +71,17 @@ pipeline {
 
     }
 
-    stage('Deploy to test server'){
-      options {
-        skipDefaultCheckout()
-      }
-      when { branch "jenkins" }
-      steps {
-        // DEPLOY TO TEST-SERVER
-        sh 'ls -lah var/lib/jenkins/.ssh/'
-        sh 'Docker_scripts/deploy.sh $test_server $docker_username'
-      }
-    }
+    // stage('Deploy to test server'){
+    //   options {
+    //     skipDefaultCheckout()
+    //   }
+    //   when { branch "jenkins" }
+    //   steps {
+    //     // DEPLOY TO TEST-SERVER
+    //     sh 'ls -lah var/lib/jenkins/.ssh/'
+    //     sh 'Docker_scripts/deploy.sh $test_server $docker_username'
+    //   }
+    // }
 
     stage('Integration test') {
       options {
