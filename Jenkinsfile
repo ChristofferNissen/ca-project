@@ -88,7 +88,7 @@ pipeline {
       when { branch "jenkins" }
       steps {
         // CURL test server
-        sh 'curl '
+        sh 'curl $test_server'
       }
     }
 
