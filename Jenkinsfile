@@ -78,6 +78,7 @@ pipeline {
       when { branch "jenkins" }
       steps {
         // DEPLOY TO TEST-SERVER
+        sh 'ls -lah var/lib/jenkins/.ssh/'
         sh 'Docker_scripts/deploy.sh $test_server $docker_username'
       }
     }
