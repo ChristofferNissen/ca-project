@@ -23,9 +23,11 @@ pipeline {
         sh 'Docker_scripts/build.sh $docker_username'
       }
       post {
-        sh 'ls -lah'
-        deleteDir()
-        sh 'ls -lah'
+        always {
+          sh 'ls -lah'
+          deleteDir()
+          sh 'ls -lah'
+        }
       }
     }
 
