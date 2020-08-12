@@ -5,7 +5,7 @@ pipeline {
   }
   stages {
 
-    stage('clone down'){
+    stage('clone down') {
       agent {
         label 'host'
       }
@@ -19,8 +19,8 @@ pipeline {
         skipDefaultCheckout()
       }
       steps {
-        unstash 'code'
-        sh 'Docker_scripts/build.sh' $docker_username
+        unstash "code"
+        sh 'Docker_scripts/build.sh $docker_username'
       }
       post {
         sh 'ls -lah'
