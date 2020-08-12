@@ -1,4 +1,6 @@
 version: "3"
 services:
   python-app:
+    ports: 
+      - 80:5000
     build: .
