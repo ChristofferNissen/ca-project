@@ -10,7 +10,7 @@ pipeline {
         label 'host'
       }
       steps {
-        stash name: "code", excludes: ".git"
+        stash name: 'code', excludes: '.git'
       }  
     }
 
@@ -34,7 +34,9 @@ pipeline {
           skipDefaultCheckout()
         }
         steps {
+          sh 'ls -lah'
           unstash 'code'
+          sh 'ls -lah'
           sh 'apt-get install python-pip -y'
           sh 'python -m pip install -r requirements.txt'
           sh 'python tests.py'
