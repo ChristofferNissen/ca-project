@@ -1,1 +1,1 @@
-docker push $1/caprojectapp
+docker-compose push

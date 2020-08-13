@@ -31,7 +31,7 @@ class TestCase(unittest.TestCase):
 
     # We gotta boost that test count
     def test_silly(self):
-        assert True
+        assert False
 
     # Test that our testdatabase does not come with any posts
     def test_no_predefined_posts(self):
