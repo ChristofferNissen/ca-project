@@ -48,7 +48,7 @@ pipeline {
               
               echo 'Pipeline will fail if docker tests returns non-zero exit status'
               //sh 'Docker_scripts/run.sh $docker_username tests.py'
-              sh 'docker-compose up --build --exit-code-from sut -f docker-compose.test.yml'
+              sh 'docker-compose up --build -f docker-compose.test.yml'
 
             }
         }
