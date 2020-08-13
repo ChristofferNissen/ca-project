@@ -87,7 +87,7 @@ pipeline {
       steps {
         // DEPLOY TO TEST-SERVER
         //sh 'ls -lah var/lib/jenkins/.ssh/'
-        sshagent (credentials: ['ubuntu']) {
+        sshagent (credentials: ['bedtime']) {
           sh 'ssh -o StrictHostKeyChecking=no ubuntu@34.77.204.230 ./Docker_scripts/deploy.sh'
         }
         //sh 'Docker_scripts/deploy.sh'
