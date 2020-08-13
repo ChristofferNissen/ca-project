@@ -87,29 +87,12 @@ pipeline {
       steps {
         // DEPLOY TO TEST-SERVER
         //sh 'ls -lah var/lib/jenkins/.ssh/'
-        
-        sh 'Docker_scripts/deploy.sh'
+        sshagent (credentials: ['ubuntu']) {
+          sh 'ssh -o StrictHostKeyChecking=no ubuntu@34.77.204.230 ./Docker_scripts/deploy.sh'
+        }
+        //sh 'Docker_scripts/deploy.sh'
         //sh 'Docker_scripts/deploy.sh $test_server $docker_username'
       }
-    }
-
-    def remote = [:]
-    remote.name = "host"
-    remote.host = "35.195.24.192:8080"
-    remote.allowAnyHosts = true
-    node {
-        withCredentials([sshUserPrivateKey(credentialsId: 'bedtime', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'userName')]) {
-            remote.user = userName
-            remote.identityFile = identity
-            stage("SSH Steps Rocks!") {
-                writeFile file: 'abc.sh', text: 'ls'
-                sshCommand remote: remote, command: 'for i in {1..5}; do echo -n \"Loop \$i \"; date ; sleep 1; done'
-                sshPut remote: remote, from: 'abc.sh', into: '.'
-                sshGet remote: remote, from: 'abc.sh', into: 'bac.sh', override: true
-                sshScript remote: remote, script: 'abc.sh'
-                sshRemove remote: remote, path: 'abc.sh'
-            }
-        }
     }
 
     stage('Integration test') {
