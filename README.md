@@ -55,33 +55,25 @@ You need to know what is happening to the code and who is working on what.
 
 The first step is obvious. Put your code under version control and set up a task management system for your project.
 
-### GitHub Projects
+### Collaboration with GitHub Projects
 
-An easy way to create an agile task management setup for your project is to use GitHub issues together with their `projects` tab. This allows you to have a full swim lane and track your tasks in a nice visual way that is completely integrated with GitHub.
+The rest of this README contains a lot of individual tasks to complete. Just as with any other project, you will want some way of managing which tasks you are currently working on and what is on you backlog. You could do this with sticky-notes on a wall, but we would recommend you use an actual online task management system instead - especially if you are working as a group.
+
+An easy way to create an agile task management setup for your project is to use GitHub issues together with the GitHub Projects feature found on the `projects` tab. This allows you to have a full swim lane and track your tasks in a nice visual way that is completely integrated with GitHub.
 
 Go over to the `Projects` tab and create your project.
 
 ![Create project](/docs/images/create-project.png)
 
-### Task
+_Consider every step in a task as a story, also created as an issue in your GH repository. Groom them together, breaking down the stories where it makes sense._
 
-- Use your fork of the Git repository containing the code
-- Create issues in your repository
-  - See `github_issues.py` for the issues to create
-  - To run the Python script, **edit** `github_issues.py` to set `REPO_OWNER` and `USERNAME` with your own GitHub account name
-  - Then set an environment variable called `GITHUB_PASSWORD` e.g. `export GITHUB_PASSWORD=yourSuperSecretPassword`
+It is good practice to always mention which issue you are working on in your commit messages. GitHub will actually use this information to link your issues and commits together in the UI, giving you valuable traceability information. 
 
-Python hints for the issues script:
-- Linux:
-  - `sudo apt-get install python-pip`
-  - `sudo pip install requests`
-- Mac:
-  - `sudo easy_install pip`
-  - `sudo pip install requests`
+The even cooler next step is to use GitHubs build in automation to automatically close issues when you commit the change. See [Closing issues using keywords](https://help.github.com/en/articles/closing-issues-using-keywords).
 
-Alternatively, you should already know how to run this in a Docker image :-)
+You can even move beyond this and look at (Automation for project boards)[https://help.github.com/en/articles/about-automation-for-project-boards].
 
-_From now on you should consider every step in a task as a story, also created in your GH repository. Remember to groom them together, breaking down the stories where it makes sense._
+... and now on to the actual project work.
 
 ## Bat out of hell
 
@@ -126,12 +118,12 @@ Things are looking up for you.
 You keep stepping a bit on each others toes, so of course you look into some sort of automated tests.
 Luckily the project was not created by entities of pure evil. There are some tests that can be run. You need to automate them. You can run the current set of tests with `python tests.py`.
 
-Continuous Integration is the goal, and you look to your good old friend CircleCI for some needed support.
+Continuous Integration is the goal, and you look to your good old friend Jenkins for some needed support.
 
 ### Task
 
-- Setup a CircleCI project
-- Setup a Continuous Integration pipeline (the config CircleCI is running) 
+- Setup a Jenkins project
+- Setup a Continuous Integration pipeline (the config Jenkins is running) 
 - Run the tests in the pipeline
 - Make sure you maintain mainline integrity meaning all commits to master needs to be tested by CI before merging.
 
@@ -143,11 +135,11 @@ Every time that release time comes around, you get uncomfortable. You do not fee
 
 It is now time to script your way to deployment.
 
-> Hint: If you want to run a dockerfile on your server, you can ssh into the server from CircleCI, just like you SSH into the server from your machine. For more into, look [here](https://circleci.com/docs/2.0/deployment/#ssh)
+> Hint: If you want to run a dockerfile on your server, you can ssh into the server from Jenkins, just like you SSH into the server from your machine.
 
 ### Task
 
-- Create a script that runs the application on your server.
+- Create a script that runs the application on your server. (tip, you can use the ssh key you were given to the cloud instance. Look here fore more guidance: https://www.jenkins.io/blog/2019/02/06/ssh-steps-for-jenkins-pipeline/)
 - Augment your script such that you can deploy to multiple targets ( eg. local, staging, production ).
 - If you are more people in the team, try to push your code to one of the other servers, using its private IP (You can get that by issuing the command `ifconfig` ).
 
@@ -165,7 +157,7 @@ Even a very simple thing as being able to reach your server with `curl` or `wget
 
 - Use your automated deploy to deploy in testing
 - Do functional testing (You know your servers IP)
-- Display result in CircleCI
+- Display result in Jenkins
 - This might not be a tollgate criteria, but it is important information for you to gain.
 
 ## Now we have time for the cool stuff
