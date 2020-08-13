@@ -6,3 +6,13 @@ COPY *.py /
 COPY app.db /
 ENTRYPOINT ["python3"]
 CMD [ "run.py" ]
+
+
+
+
+
+
+# FROM ubuntu:latest
+# RUN 'apt install zip'
+# ENTRYPOINT ["zip"]
+# CMD [ "Default file location" ]
