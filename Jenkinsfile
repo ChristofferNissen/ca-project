@@ -4,6 +4,7 @@ pipeline {
     docker_username='stifstof'
     test_server='35.195.24.192'
   }
+
   stages {
 
     stage('clone down') {
@@ -86,7 +87,7 @@ pipeline {
       steps {
         // DEPLOY TO TEST-SERVER
         //sh 'ls -lah var/lib/jenkins/.ssh/'
-        ssh
+        
         sh 'Docker_scripts/deploy.sh'
         //sh 'Docker_scripts/deploy.sh $test_server $docker_username'
       }
