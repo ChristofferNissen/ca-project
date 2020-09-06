@@ -84,12 +84,10 @@ pipeline {
         // DEPLOY TO TEST-SERVER
         //sh 'ls -lah var/lib/jenkins/.ssh/'
 
-        def workspace = WORKSPACE
-
 	      unstash 'code'
 	      sh 'ls -lah'
         sshagent (credentials: ['bedtime']) {
-          sh 'scp -r -o StrictHostKeyChecking=no ${workspace}  pi@192.168.1.102:~/code/'
+          sh 'scp -r -o StrictHostKeyChecking=no $WORKSPACE  pi@192.168.1.102:~/code/'
 	        sh 'ssh -o StrictHostKeyChecking=no pi@192.168.1.102 ./code/Docker_scripts/deploy.sh'
         }
 
