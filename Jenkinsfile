@@ -66,7 +66,7 @@ pipeline {
       }
       when { branch "jenkins" } 
       steps {
-        //unstash 'build' //unstash the repository code
+        unstash 'build' //unstash the repository code
         //sh 'ci/build-docker.sh'
         //sh 'Docker_scripts/build.sh' $docker_username
         sh 'echo "$DOCKERCREDS_PSW" | docker login -u "$DOCKERCREDS_USR" --password-stdin' //login to docker hub with the credentials above
@@ -84,9 +84,11 @@ pipeline {
       steps {
         // DEPLOY TO TEST-SERVER
         //sh 'ls -lah var/lib/jenkins/.ssh/'
+
         sshagent (credentials: ['bedtime']) {
           sh 'ssh -o StrictHostKeyChecking=no pi@192.168.1.102 ./Docker_scripts/deploy.sh'
         }
+
         //sh 'Docker_scripts/deploy.sh'
         //sh 'Docker_scripts/deploy.sh $test_server $docker_username'
       }
