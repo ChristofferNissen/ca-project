@@ -2,7 +2,7 @@ pipeline {
   agent any
   environment {
     docker_username='stifstof'
-    test_server='192.168.1.101'
+    test_server='91.100.23.100'
   }
 
   stages {
