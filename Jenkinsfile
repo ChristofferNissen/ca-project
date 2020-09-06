@@ -2,7 +2,7 @@ pipeline {
   agent any
   environment {
     docker_username='stifstof'
-    test_server='35.195.24.192'
+    test_server='192.168.1.101'
   }
 
   stages {
@@ -48,17 +48,14 @@ pipeline {
               
               echo 'Pipeline will fail if docker tests returns non-zero exit status'
               //sh 'Docker_scripts/run.sh $docker_username tests.py'
-              sh 'docker-compose up --build -f docker-compose.test.yml'
+              sh 'docker-compose -f docker-compose.test.yml up --build'
 
             }
         }
 
       }
     }
-
-    
-
-    
+ 
 
     stage('Push to Dockerhub') {
       options {
@@ -88,7 +85,7 @@ pipeline {
         // DEPLOY TO TEST-SERVER
         //sh 'ls -lah var/lib/jenkins/.ssh/'
         sshagent (credentials: ['bedtime']) {
-          sh 'ssh -o StrictHostKeyChecking=no ubuntu@34.77.204.230 ./Docker_scripts/deploy.sh'
+          sh 'ssh -o StrictHostKeyChecking=no pi@192.168.1.102 ./Docker_scripts/deploy.sh'
         }
         //sh 'Docker_scripts/deploy.sh'
         //sh 'Docker_scripts/deploy.sh $test_server $docker_username'
