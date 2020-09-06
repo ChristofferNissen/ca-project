@@ -87,8 +87,8 @@ pipeline {
 	unstash 'code'
 	      sh 'ls -lah'
         sshagent (credentials: ['bedtime']) {
-          sh 'scp -o StrictHostKeyChecking=no ./Docker_scripts/deploy.sh pi@192.168.1.102:~/Docker_scripts/deploy.sh'
-	        sh 'ssh -o StrictHostKeyChecking=no pi@192.168.1.102 ./Docker_scripts/deploy.sh'
+          sh 'scp -o StrictHostKeyChecking=no . pi@192.168.1.102:~/code'
+	        sh 'ssh -o StrictHostKeyChecking=no pi@192.168.1.102 ./code/Docker_scripts/deploy.sh'
         }
 
         //sh 'Docker_scripts/deploy.sh'
