@@ -12,7 +12,14 @@ pipeline {
     stage('clone down') {
       steps {
         stash name: 'code', excludes: '.git'
-      }  
+      }
+      post {
+        always {
+          sh 'ls -lah'
+          deleteDir()
+          sh 'ls -lah'
+        }
+      }
     }
     
     stage('Parallel Excution') {
@@ -25,13 +32,7 @@ pipeline {
             unstash 'code'
             sh 'Docker_scripts/build.sh'
           }
-          // post {
-          //   always {
-          //     sh 'ls -lah'
-          //     deleteDir()
-          //     sh 'ls -lah'
-          //   }
-          // }
+          
         }
 
         stage('Test') {
@@ -41,7 +42,6 @@ pipeline {
           steps {
             unstash 'code'
             echo 'Pipeline will fail if docker tests returns non-zero exit status'
-            //sh 'Docker_scripts/run.sh $docker_username tests.py'
             sh 'docker-compose -f docker-compose.test.yml up --build'
           }
         }
@@ -72,16 +72,18 @@ pipeline {
       options {
         skipDefaultCheckout()
       }
+      environment {
+        HASH = sh 'echo -n date +%N | md5sum'
+      }
       when { branch "jenkins" }
       steps {
         // DEPLOY TO TEST-SERVER
         //sh 'ls -lah var/lib/jenkins/.ssh/'
-
 	      unstash 'code'
 	      sh 'ls -lah'
         sshagent (credentials: ['bedtime']) {
-          sh 'scp -r -o StrictHostKeyChecking=no $WORKSPACE  pi@192.168.1.102:~/code/'
-	        sh 'ssh -o StrictHostKeyChecking=no pi@192.168.1.102 ./code/Docker_scripts/deploy.sh'
+          sh 'scp -r -o StrictHostKeyChecking=no $WORKSPACE pi@192.168.1.102:~/code/$HASH'
+	        sh 'ssh -o StrictHostKeyChecking=no pi@192.168.1.102 ./code/$HASH/Docker_scripts/deploy.sh'
         }
 
       }
