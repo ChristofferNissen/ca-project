@@ -1,5 +1,7 @@
 pipeline {
-  agent any
+  agent {
+    label 'host'
+  }
   environment {
     docker_username='stifstof'
     test_server='91.100.23.100'
@@ -8,9 +10,6 @@ pipeline {
   stages {
 
     stage('clone down') {
-      agent {
-        label 'host'
-      }
       steps {
         stash name: 'code', excludes: '.git'
       }  
@@ -26,31 +25,25 @@ pipeline {
             unstash 'code'
             sh 'Docker_scripts/build.sh'
           }
-          post {
-            always {
-              sh 'ls -lah'
-              deleteDir()
-              sh 'ls -lah'
-            }
-          }
+          // post {
+          //   always {
+          //     sh 'ls -lah'
+          //     deleteDir()
+          //     sh 'ls -lah'
+          //   }
+          // }
         }
 
         stage('Test') {
-            options {
-              skipDefaultCheckout()
-            }
-            steps {
-              unstash 'code'
-              //sh 'sudo apt-get install python-pip -y'
-              //sh 'sudo pip install requests'
-              //sh 'python -m pip install -r requirements.txt'
-              //sh 'python tests.py'
-              
-              echo 'Pipeline will fail if docker tests returns non-zero exit status'
-              //sh 'Docker_scripts/run.sh $docker_username tests.py'
-              sh 'docker-compose -f docker-compose.test.yml up --build'
-
-            }
+          options {
+            skipDefaultCheckout()
+          }
+          steps {
+            unstash 'code'
+            echo 'Pipeline will fail if docker tests returns non-zero exit status'
+            //sh 'Docker_scripts/run.sh $docker_username tests.py'
+            sh 'docker-compose -f docker-compose.test.yml up --build'
+          }
         }
 
       }
@@ -91,8 +84,6 @@ pipeline {
 	        sh 'ssh -o StrictHostKeyChecking=no pi@192.168.1.102 ./code/Docker_scripts/deploy.sh'
         }
 
-        //sh 'Docker_scripts/deploy.sh'
-        //sh 'Docker_scripts/deploy.sh $test_server $docker_username'
       }
     }
 
