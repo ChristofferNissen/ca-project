@@ -85,7 +85,7 @@ pipeline {
             scp -r -o StrictHostKeyChecking=no $WORKSPACE pi@192.168.1.102:~/code/$NANOSEC
             ssh -o StrictHostKeyChecking=no pi@192.168.1.102 ./code/$NANOSEC/Docker_scripts/deploy.sh
             PATH=$(code/$NANOSEC)
-            ssh -o StrictHostKeyChecking=no pi@192.168.1.102 rm -r $PATH
+            ssh -o StrictHostKeyChecking=no pi@192.168.1.102 'rm -r $PATH'
           '''
         }
 
