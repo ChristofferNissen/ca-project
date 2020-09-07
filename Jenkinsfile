@@ -79,7 +79,7 @@ pipeline {
 	      unstash 'code'
 	      sh 'ls -lah'
         sshagent (credentials: ['bedtime']) {
-          sh 'export NANOSEC=$(date +%N)' // | md5sum)'
+          sh 'NANOSEC=$(date +%N)' // | md5sum)'
           //sh 'export HASH=${RAW:0:10}'
           sh 'scp -r -o StrictHostKeyChecking=no $WORKSPACE pi@192.168.1.102:~/code/$NANOSEC'
 	        sh 'ssh -o StrictHostKeyChecking=no pi@192.168.1.102 ./code/$NANOSEC/Docker_scripts/deploy.sh'
