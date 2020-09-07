@@ -84,7 +84,8 @@ pipeline {
             NANOSEC=$(date +%N) 
             scp -r -o StrictHostKeyChecking=no $WORKSPACE pi@192.168.1.102:~/code/$NANOSEC
             ssh -o StrictHostKeyChecking=no pi@192.168.1.102 ./code/$NANOSEC/Docker_scripts/deploy.sh
-            ssh -o StrictHostKeyChecking=no pi@192.168.1.102 'rm -r code/$NANOSEC'
+            CMD=$(rm -r code/$NANOSEC)
+            ssh -o StrictHostKeyChecking=no pi@192.168.1.102 $CMD
           '''
         }
 
