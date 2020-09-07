@@ -82,9 +82,9 @@ pipeline {
         sshagent (credentials: ['bedtime']) {
           sh ''' 
             NANOSEC=$(date +%N) 
-            scp -r -o StrictHostKeyChecking=no $WORKSPACE pi@192.168.1.102:~/code/$NANOSEC
-            ssh -o StrictHostKeyChecking=no pi@192.168.1.102 ./code/$NANOSEC/Docker_scripts/deploy.sh
-            ssh -o StrictHostKeyChecking=no pi@192.168.1.102 rm -r ./code/$NANOSEC/
+            scp -r -o StrictHostKeyChecking=no $WORKSPACE pi@192.168.1.102:~/jenkins-agent-deploy-artifacts/$NANOSEC
+            ssh -o StrictHostKeyChecking=no pi@192.168.1.102 ./jenkins-agent-deploy-artifacts/$NANOSEC/Docker_scripts/deploy.sh
+            ssh -o StrictHostKeyChecking=no pi@192.168.1.102 rm -r ./jenkins-agent-deploy-artifacts/$NANOSEC/
           '''
         }
 
