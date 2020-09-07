@@ -72,9 +72,6 @@ pipeline {
       options {
         skipDefaultCheckout()
       }
-      environment {
-        HASH = sh 'echo -n date +%N | md5sum'
-      }
       when { branch "jenkins" }
       steps {
         // DEPLOY TO TEST-SERVER
@@ -82,6 +79,8 @@ pipeline {
 	      unstash 'code'
 	      sh 'ls -lah'
         sshagent (credentials: ['bedtime']) {
+          sh 'export RAW=$(date +%N | md5sum)'
+          sh 'export HASH=${RAW:0:10}'
           sh 'scp -r -o StrictHostKeyChecking=no $WORKSPACE pi@192.168.1.102:~/code/$HASH'
 	        sh 'ssh -o StrictHostKeyChecking=no pi@192.168.1.102 ./code/$HASH/Docker_scripts/deploy.sh'
         }
