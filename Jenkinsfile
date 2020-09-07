@@ -43,7 +43,7 @@ pipeline {
             unstash 'code'
             echo 'Pipeline will fail if docker tests returns non-zero exit status'
             sh 'docker-compose -f docker-compose.test.yml up --build'
-            echo '$?'
+            sh 'echo $?'
           }
         }
 
