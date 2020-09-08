@@ -1,6 +1,6 @@
 pipeline {
   agent {
-    label 'host'
+    label 'arm'
   }
   environment {
     docker_username='stifstof'
